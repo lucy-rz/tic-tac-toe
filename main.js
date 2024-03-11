@@ -1,13 +1,15 @@
 //DECLARE VARIABLES
-let turn
-let grid
-const winningCombinations = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [2, 4, 6], [0, 4, 8]]
+let turn;
+let grid;
+const winningCombinations = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [2, 4, 6], [0, 4, 8]];
+let winner = null;
 
 //FUNCTIONS
 //Declare init
 function init() {
     turn = "O"
     grid = [null, null, null, null, null, null, null, null, null]
+    winner = null;
 }
 
 // Alternate players
@@ -25,14 +27,14 @@ function victory() {
         let elA = grid[oneCombination[0]];
         let elB = grid[oneCombination[1]];
         let elC = grid[oneCombination[2]];
+        console.log(elA, elB, elC, oneCombination)
         if (elA === "O" && elB === "O" && elC === "O") {
-            return "O";
+            winner = "O";
         }
         if (elA === "X" && elB === "X" && elC === "X") {
-            return "X";
+            winner = "X";
         } 
     })
-    return null
 }
 
 // Create a function for evt. Include preventDefault()
@@ -53,7 +55,8 @@ function playerClick(evt) {
     }
     console.log(grid)
     switchPlayer()
-    let winner = victory()
+    victory()
+    console.log(winner)
 }
 
 init()
