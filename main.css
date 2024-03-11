@@ -2,7 +2,7 @@
     box-sizing: border-box;
 }
 
-#tic-grid {
+#grid {
     display: grid;
     grid-template-columns: repeat(3, 10vmin);
     grid-template-rows: repeat(3, 10vmin);
@@ -10,7 +10,7 @@
     margin-left: 10vmin;
 }
 
-#tic-grid > div {
+#grid > div {
     border: 0.1vmin solid black;
 }
 
