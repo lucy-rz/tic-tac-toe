@@ -3,6 +3,8 @@ let turn;
 let grid;
 const winningCombinations = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [2, 4, 6], [0, 4, 8]];
 let winner = null;
+const playerTurn =  document.getElementById("player-turn")
+const restartBtn = document.getElementById("restartBtn")
 
 //FUNCTIONS
 //Declare init
@@ -10,6 +12,7 @@ function init() {
     turn = "O"
     grid = [null, null, null, null, null, null, null, null, null]
     winner = null;
+    displayTurn()
 }
 
 // Alternate players
@@ -53,10 +56,15 @@ function playerClick(evt) {
     // Update grid array with player turn
         grid[i] = turn
     }
-    console.log(grid)
+    if (winner === "O" || winner === "X") {
+        return
+    }
     switchPlayer()
     victory()
-    console.log(winner)
+    renderGrid()
+    displayTurn()
+    tie()
+    playerDisplayWinner()
 }
 
 init()
@@ -64,4 +72,43 @@ init()
 //EVENTS
 // Declare handleClick
 document.getElementById("grid").addEventListener("click", playerClick);
+restartBtn.addEventListener("click", restartGame);
 
+// create render()
+function renderGrid() {
+    grid.forEach(function(gridValue, gridIdx){
+        const foundEl = document.getElementById(gridIdx)
+        if(gridValue !== null) {
+            foundEl.innerText = gridValue;
+        } else {
+            foundEl.innerText = "";
+        }
+    })
+}
+
+function playerDisplayWinner() {
+    if (winner !== null) {
+        playerTurn.innerText = winner + " is the winner!";
+    }
+}
+
+function displayTurn() {
+    playerTurn.innerText = "It's " + turn + " turn";
+}
+
+function tie() {
+    let itsNull = false
+    grid.forEach(function(element){
+        if (element === null) {
+            itsNull = true
+        }
+    })
+    if (itsNull === false) {
+    playerTurn.innerText = "It's a tie"
+    }
+}
+
+function restartGame() {
+    init()
+    renderGrid()
+}
